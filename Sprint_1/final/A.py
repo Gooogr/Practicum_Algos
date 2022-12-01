@@ -1,4 +1,5 @@
 # https://contest.yandex.ru/contest/22450/problems/A/
+# https://contest.yandex.ru/contest/22450/run-report/77560006/
 
 from typing import List
 
