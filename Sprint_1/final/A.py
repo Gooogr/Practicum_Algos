@@ -1,3 +1,5 @@
+# https://contest.yandex.ru/contest/22450/problems/A/
+
 from typing import List
 
 def find_distance(values: List[int]) -> List[int]:
