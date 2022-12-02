@@ -4,8 +4,11 @@ def is_correct_bracket_seq(line: str):
     bracket_hash = {')':'(', ']':'[', '}':'{'}
     bracket_stack = []
     for item in line:
-        if bracket_stack and bracket_hash.get(item, 0) == bracket_stack[-1]:
-            bracket_stack.pop()
+        if bracket_stack and item in bracket_hash:
+            if bracket_hash[item] == bracket_stack[-1]:
+                bracket_stack.pop()
+            else:
+                return False
         else:
             bracket_stack.append(item)
     return bracket_stack == []
