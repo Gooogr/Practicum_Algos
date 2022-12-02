@@ -1,0 +1,59 @@
+# https://contest.yandex.ru/contest/22779/problems/G/
+
+from typing import List
+
+class Stack:
+    def __init__(self):
+        self.items = []
+        self.max_history = []
+
+    def push(self, value):
+        '''
+        Add value to stack and update current max
+        '''
+        self.items.append(value)
+        # Update list of maxs
+        if not self.max_history or value >= self.max_history[-1]:
+            self.max_history.append(value)
+
+    def pop(self):
+        '''
+        Delete value from the top of stack and update current max
+        '''
+        if self.items:
+            popped_value = self.items.pop()
+            if popped_value == self.max_history[-1]:
+                self.max_history.pop()
+        else:
+            print('error')
+
+    def get_max(self):
+        '''
+        Print max value in stack
+        '''
+        if self.items:
+            print(self.max_history[-1])
+        else:
+            print('None')
+
+def apply_commands(stack: Stack, commands: List[str]):
+    for step in commands:
+        if step == 'get_max':
+            stack.get_max()
+        elif step == 'pop':
+            stack.pop()
+        else:
+            value = int(step.split(' ')[1])
+            stack.push(value)
+    return stack
+
+
+def read_input() -> List[str]:
+    n = int(input())
+    commands = []
+    for _ in range(n):
+        commands.append(str(input()))
+    return commands
+
+stack = Stack()
+stack = apply_commands(stack, read_input())
