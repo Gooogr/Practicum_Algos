@@ -1,6 +1,9 @@
 # https://contest.yandex.ru/contest/22450/problems/B/
-# https://contest.yandex.ru/contest/22450/run-report/78517057/
+# https://contest.yandex.ru/contest/22450/run-report/78629798/
+
 from typing import List, Tuple
+
+MATRIX_SIZE = 4
 
 def get_max_possible_points(k:int, matrix: List[List[str]]):
     count_dict = {}
@@ -19,7 +22,7 @@ def get_max_possible_points(k:int, matrix: List[List[str]]):
 def read_input() -> Tuple[int, List[List[str]]]:
     k = int(input())
     matrix = []
-    for input_row in range(4):
+    for _ in range(MATRIX_SIZE):
         matrix.append(input().strip())
     return k, matrix
 
