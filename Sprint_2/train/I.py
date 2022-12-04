@@ -11,6 +11,9 @@ class MyQueueSized:
         self.queue_size = 0
     
     def pop(self):
+        '''
+        Delete head element and print it
+        '''
         if self.queue_size == 0:
             print('None')
         else:
@@ -21,15 +24,24 @@ class MyQueueSized:
             print(x)
 
     def peek(self):
+        '''
+        Print head element
+        '''
         if self.queue_size == 0:
             print('None')
         else:
             print(self.queue[self.head])
 
     def size(self):
+        '''
+        Print size of queue
+        '''
         print(self.queue_size)
 
     def push(self, x):
+        '''
+        Add new element to tail
+        '''
         if self.queue_size < self.max_n:
             self.queue[self.tail] = x
             self.tail = (self.tail + 1) % self.max_n
