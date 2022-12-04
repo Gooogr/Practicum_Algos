@@ -57,9 +57,11 @@ def apply_commands(queue: MyQueueSized, commands: List[str]):
             queue.peek()
         elif step == 'size':
             queue.size()
-        else:
+        elif step == 'push':
             value = int(step.split(' ')[1])
             queue.push(value)
+        else:
+            raise ValueError('Incorrect command')
     return queue
 
 def read_input() -> Tuple[int, List[str]]:
