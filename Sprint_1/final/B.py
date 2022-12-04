@@ -1,6 +1,5 @@
 # https://contest.yandex.ru/contest/22450/problems/B/
-# https://contest.yandex.ru/contest/22450/run-report/77570432/
-
+# https://contest.yandex.ru/contest/22450/run-report/78517057/
 from typing import List, Tuple
 
 def get_max_possible_points(k:int, matrix: List[List[str]]):
@@ -20,7 +19,7 @@ def get_max_possible_points(k:int, matrix: List[List[str]]):
 def read_input() -> Tuple[int, List[List[str]]]:
     k = int(input())
     matrix = []
-    for _ in range(4):
+    for input_row in range(4):
         matrix.append(input().strip())
     return k, matrix
 
