@@ -1,4 +1,23 @@
 # https://contest.yandex.ru/contest/22781/problems/A/
+# https://contest.yandex.ru/contest/22781/run-report/78802444/
+'''
+--Описание решения--
+Решение реализованно на кольцевом буфере. Сам буфер - это динамиечский массив
+с заранее определенным размером.
+
+--Доказательство корректности--
+Указатели head и tail передвигаются по кольцу через операцию деления по модулю.
+Таким образом в каждый момент времени у нас есть доступ как к началу, так и к концу 
+массива
+
+--Временная сложность--
+Временная сложность всех операций O(n), поскольку размер массива определен заранее,
+а сложность изменения элемента массива по индексу составляет O(1)
+
+--Пространственная сложность--
+Алгоритм требует O(n) памяти на хранение данных, и O(1) для хранения 
+вспомогательных переменных.
+'''
 
 from typing import List, Tuple
 
@@ -12,7 +31,7 @@ class DeckSized:
     
     def push_back(self, x):
         '''
-        Add new element to the tail of deck
+        Add new element from the tail side
         '''
         if self.queue_size < self.max_n:
             self.queue[self.tail] = x
@@ -22,14 +41,22 @@ class DeckSized:
             print('error')
 
     def push_front(self, x):
-        pass
+        '''
+        Add new element from the head side
+        '''
+        if self.queue_size < self.max_n:
+            self.queue[self.head - 1] = x
+            self.head = (self.head - 1) % self.max_n
+            self.queue_size += 1
+        else:
+            print('error')
 
     def pop_front(self):
         '''
         Delete head element and print it
         '''
         if self.queue_size == 0:
-            print('None')
+            print('error')
         else:
             x = self.queue[self.head]
             self.queue[self.head] = None
@@ -41,6 +68,14 @@ class DeckSized:
         '''
         Delete tail element and print it
         '''
+        if self.queue_size == 0:
+            print('error')
+        else:
+            x = self.queue[self.tail - 1]
+            self.queue[self.tail - 1] = None
+            self.tail = (self.tail - 1) % self.max_n
+            self.queue_size -= 1
+            print(x)
 
 ###----------------------------- Helper functions --------------------------###
 def read_input() -> Tuple[int, List[str]]:
@@ -65,12 +100,13 @@ def apply_commands(deck: DeckSized, commands: List[str]):
             deck.pop_back()
         else:
             raise ValueError('Incorrect command')
-        # TURN OFF PRINTS BEFORE SUBMIT
-        print()
-        print('-----------------')
-        print('Get command:', step)
-        print('Current deck state:', deck.queue)
-        print('-----------------')
+        ## TURN OFF PRINTS BEFORE SUBMIT
+        # print()
+        # print('-----------------')
+        # print('Get command:', step)
+        # print('Current deck state:', deck.queue)
+        # print('Deck size:', deck.queue_size)
+        # print('-----------------')
     return deck
 
 ###------------------------------- Run steps -------------------------------###
