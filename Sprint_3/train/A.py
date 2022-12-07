@@ -12,8 +12,6 @@ def generate_valid_brackets_line(n:int, line:str, n_open: int, n_closed: int):
     # Number of ) can't be more than number of (
     if n_open > n_closed:
         generate_valid_brackets_line(n, line + ')', n_open, n_closed + 1)
-    else:
-        return None
 
 generate_valid_brackets_line(int(input()), '', 0, 0)
 for item in results:
