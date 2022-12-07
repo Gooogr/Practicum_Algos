@@ -1,4 +1,5 @@
 # O(n**2)
+# Stable sort
 
 from typing import List
 
@@ -19,6 +20,7 @@ def insertion_sort(array: List[int]):
 
 result = insertion_sort([11, 2, 9, 7, 1])
 print('Final result:', result)
+
 # Input:                     [11, 2, 9, 7, 1] 
 # step 1, sorted 2 elements: [2, 11, 9, 7, 1]
 # step 2, sorted 3 elements: [2, 9, 11, 7, 1]
