@@ -1,4 +1,5 @@
 # O(n*log(n))
+# Need additional memory to store left, right, center arrays
 
 from typing import List, Tuple
 
