@@ -1,6 +1,6 @@
 # https://contest.yandex.ru/contest/23638/problems/I/
 # O(n) in best, O(n*logn) in worst solution with additional memory
-
+# Could be solved as O(n*logk) with max heap
 from typing import List, Tuple
 
 def top_k_freq_ids(ids: List[int], k:int):
