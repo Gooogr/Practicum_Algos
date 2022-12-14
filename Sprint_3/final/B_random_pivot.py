@@ -1,5 +1,5 @@
 # https://contest.yandex.ru/contest/23815/problems/B/
-# https://contest.yandex.ru/contest/23815/run-report/79440838/
+# https://contest.yandex.ru/contest/23815/run-report/79450507/
 '''
 --Описание решения--
 Решение основано на быстрой сортировке Хоара без использования дополнительной памяти
@@ -19,11 +19,17 @@
 from typing import List, Tuple
 from random import randint
 
+# TODO: add first <-> pivot ligic
+
 def quicksort(arr: List, left:int, right:int):
     if left >= right:
         return 
     # select pivot index
+    # based on https://www.geeksforgeeks.org/quicksort-using-random-pivoting/
+    # Implementation using Hoare’s Partitioning
     pivot = randint(left, right)
+    arr[pivot], arr[left] = arr[left], arr[pivot]
+    pivot = left
     # in-place swap
     l_idx, r_idx = left, right
     while l_idx <= r_idx:
