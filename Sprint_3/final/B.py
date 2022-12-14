@@ -1,5 +1,5 @@
 # https://contest.yandex.ru/contest/23815/problems/B/
-# https://contest.yandex.ru/contest/23815/run-report/79230044/
+# 
 '''
 --Описание решения--
 Решение основано на быстрой сортировке Хоара без использования дополнительной памяти
@@ -17,12 +17,19 @@
 Алгоритм требует O(1) дополнительной памяти 
 '''
 from typing import List, Tuple
+from random import randint
 
 def quicksort(arr: List, left:int, right:int):
     if left >= right:
         return 
+
     # select pivot index
-    pivot = left
+    # В случае если брать индекс с края - left или right, то все работает
+    # При замене на randint(left, right) соритровка перестает работать
+    # Не понимаю в чем проблема
+    pivot = left 
+
+
     # in-place swap
     l_idx, r_idx = left, right
     while l_idx <= r_idx:
@@ -54,6 +61,3 @@ data = read_input()
 quicksort(data, 0, len(data) - 1)
 for item in data:
     print(item[2])
-
-
-
