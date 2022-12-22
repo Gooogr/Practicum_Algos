@@ -18,14 +18,11 @@ def group_anagrams(words: List[str]):
         anagram_dict[word_code].append(idx)
     return sorted(anagram_dict.values())
 
-    
-
-
-    
-
 def read_input():
     _ = input()
     words = input().split()
     return words
 
-print(group_anagrams(read_input()))
+result = group_anagrams(read_input())
+for item in result:
+    print(*item, sep=' ')
