@@ -14,11 +14,6 @@ def get_hash(a:int, m:int, s:str):
         string_hash = string_hash*a + ord(s[idx])
     return string_hash % m
 
-# Rolling hash function
-def get_hash(a:int, m:int, s:str):
-    hash_value = 0
-    
-
 def read_input():
     a = int(input())
     m = int(input())
