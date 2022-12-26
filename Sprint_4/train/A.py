@@ -15,8 +15,8 @@ def get_hash(a:int, m:int, s:str):
     for idx in range(1, len(s)):
         string_hash = string_hash*a + ord(s[idx])
         string_hash = string_hash % m
-    return string_hash #% m
-
+    return string_hash
+    
 def read_input():
     a = int(input())
     m = int(input())
