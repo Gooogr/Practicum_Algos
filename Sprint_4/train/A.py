@@ -9,10 +9,13 @@
 
 # Horner’s Method
 def get_hash(a:int, m:int, s:str):
+    if not s:
+        return 0
     string_hash = ord(s[0])
     for idx in range(1, len(s)):
         string_hash = string_hash*a + ord(s[idx])
-    return string_hash % m
+        string_hash = string_hash % m
+    return string_hash #% m
 
 def read_input():
     a = int(input())
