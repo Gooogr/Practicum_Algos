@@ -1,12 +1,5 @@
 # https://contest.yandex.ru/contest/24414/problems/B/
 
-'''
---Описание решения--
-https://all-num.com/ru/prime/0-999999/100000-104999.html
---Доказательство корректности--
---Временная сложность--
---Пространственная сложность--
-'''
 from typing import List, Optional
 
 TABLE_CAPACITY = 999983 
@@ -119,13 +112,13 @@ def apply_commands(hash_table: Hash_table, commands: List[str]):
         elif step[0] == 'get':
             result = hash_table.get(int(step[1]))
             if result is None:
-                print(None)
+                print('None')
             else:
                 print(result)
         elif step[0] == 'delete':
             result = hash_table.delete(int(step[1]))
             if result is None:
-                print(None)
+                print('None')
             else:
                 print(result)
         else:
