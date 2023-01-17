@@ -1,1 +1,1 @@
-Tasks from the Practicum's course "Algorithms and data structures"
+Задачи с курса Практикума «Алгоритмы и структуры данных»
