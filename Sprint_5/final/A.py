@@ -29,8 +29,10 @@ class MaxHeap():
         left_idx = idx * 2
         right_idx = idx * 2 +1
 
+        # No childrens case
         if self.size < left_idx:
             return None 
+        # Where self.size >= right_idx for making sure that both children exist
         if self.size >= right_idx and self.heap[left_idx] < self.heap[right_idx]:
             return right_idx
         else:
@@ -53,9 +55,15 @@ class MaxHeap():
         self._sift_up(self.size)
 
     def pop(self) -> int:
-        pass
-        # if self.size < 2:
-        #     raise ValueError("Can't remove element, heap is empty")
+        if self.size < 1:
+            raise ValueError("Can't remove element, heap is empty")
+        max_value = self.heap[1]
+        # Replace root by last added value and sift it down
+        self.heap[1] = self.heap[self.size]
+        self.heap.pop()
+        self.size -= 1
+        self._sift_down(1)
+        return max_value
 
 
 min_heap = MaxHeap()
@@ -63,5 +71,9 @@ min_heap.insert(10)
 min_heap.insert(20)
 min_heap.insert(30)
 min_heap.insert(-100)
+min_heap.pop()
+min_heap.pop()
+min_heap.pop()
+min_heap.pop()
 
-print(min_heap.heap)
+print(min_heap.heap, min_heap.size)
