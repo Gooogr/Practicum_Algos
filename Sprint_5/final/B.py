@@ -13,12 +13,32 @@ if LOCAL:
             self.left = left
             self.value = value
 
+def find_node_with_parent_by_value(root: Node, val: int):
+    '''
+    Search node and its parent by node value
+    '''
+    if not root:
+        return None
+
+    # Base case
+    left_child = root.left
+    right_child = root.right
+    if left_child and left_child.value == val:
+        return left_child, root
+    if right_child and right_child.value == val:
+        return right_child, root
+
+    # Recursion case
+    if root.value > val:
+        return find_node_with_parent_by_value(root.left, val)
+    else:
+        return find_node_with_parent_by_value(root.right, val)
+
 def get_right_corner_node(root: Node):
     '''
     Return the most right node is selected tree.
     Use iterative BFS with level size tracking
     '''
-
     # Empty tree
     if not root:
         return None
@@ -60,10 +80,12 @@ def test():
     root.left.left = Node(value=8)
     root.left.right = Node(value=12)
     root.right.left = Node(value=16)
-    # root.right.right = Node(value=25)
+    root.right.right = Node(value=25)
 
-    print('########')
-    print(get_right_corner_node(root).value)
+    # print(get_right_corner_node(root).value)
+
+    nodes = find_node_with_parent_by_value(root, 16)
+    print(nodes[0].value, nodes[1].value)
 
 
     # node1 = Node(None, None, 2)
