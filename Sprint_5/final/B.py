@@ -1,4 +1,31 @@
 # https://contest.yandex.ru/contest/24810/problems/B/
+# https://contest.yandex.ru/contest/24810/run-report/81328144/
+
+'''
+--Описание решения--
+Итеративный алгоритм удаления узла из бинарного дерева поиска.
+Разбит на 2 этапа:
+* Поиск нужного узла по значечнию ключа
+* Удаления узла, при необходимости с его заменой.
+
+
+--Доказательство корректности--
+Алгоритм обрабатывает следующие случаи:
+* Дерево состоит из одного узла.
+* Целевой узел является листом
+* У целевого узла только один ребенок. Его поддерево используем для замены 
+удаленного узла.
+* У целевого узла два ребенка. В этом случае в качестве замены 
+используется максимальный элемент левого поддерева.
+
+--Временная сложность--
+Временная сложность составляет O(H), где H - глубина дерева. В худшем случае 
+глубина дерева может достигать N,где N - число элементов в дереве.
+
+--Пространственная сложность--
+Аналогично, O(H)
+'''
+
 
 # ! change LOCAL to False before submitting !
 # set LOCAL to True for local testing
@@ -13,15 +40,23 @@ if LOCAL:
             self.left = left
             self.value = value
 
-def get_tree_max(root: Optional[Node]):
-	if not root:
-		return None
-	while root.right:
-		root = root.right
-	return root
+###----------------------------- Helper functions --------------------------###
 
-def printBinaryTree(root, space, height):
-	# https://www.techiedelight.com/print-two-dimensional-view-binary-tree/
+def get_tree_max(root: Optional[Node]) -> Optional[Node]:
+    '''
+    Return node with max value in search binary tree
+    '''
+    if not root:
+        return None
+    while root.right:
+        root = root.right
+    return root
+
+def printBinaryTree(root: Optional[Node], space: int=0, height: int=4):
+    '''
+    Print binary tree for debug simplification
+    Taken from https://www.techiedelight.com/print-two-dimensional-view-binary-tree/
+    '''
     # Base case
     if root is None:
         return
@@ -38,7 +73,8 @@ def printBinaryTree(root, space, height):
     print()
     printBinaryTree(root.left, space, height)
 
-# Iterative approach
+###----------------------------- Main function --------------------------###
+
 def remove(root: Optional[Node], key: int) -> Optional[Node]:
 	if not root:
 		return None
@@ -75,7 +111,7 @@ def remove(root: Optional[Node], key: int) -> Optional[Node]:
 	elif d_node.left and d_node.right:
 		p_node = get_tree_max(d_node.left)
 		p_node_value = p_node.value
-		remove(root, p_node.value)
+		remove(root, p_node.value) # run only one, because all values are unique
 		d_node.value = p_node_value
 	# One child case
 	else:
@@ -96,55 +132,56 @@ def remove(root: Optional[Node], key: int) -> Optional[Node]:
 	return root
 
 def test():
-	# Build in test
-	node1 = Node(None, None, 2)
-	node2 = Node(node1, None, 3)
-	node3 = Node(None, node2, 1)
-	node4 = Node(None, None, 6)
-	node5 = Node(node4, None, 8)
-	node6 = Node(node5, None, 10)
-	node7 = Node(node3, node6, 5)
-	print('Original')
-	printBinaryTree(node7, 0, 5)
-	newHead = remove(node7, 10)
-	print('Altered')
-	printBinaryTree(newHead, 0, 5)
-	assert newHead.value == 5, newHead.value
-	assert newHead.right is node5
-	assert newHead.right.value == 8
-	print('----------------------')
+    # Build in test
+    node1 = Node(None, None, 2)
+    node2 = Node(node1, None, 3)
+    node3 = Node(None, node2, 1)
+    node4 = Node(None, None, 6)
+    node5 = Node(node4, None, 8)
+    node6 = Node(node5, None, 10)
+    node7 = Node(node3, node6, 5)
+    print('Original')
+    printBinaryTree(node7)
+    newHead = remove(node7, 10)
+    print('Altered')
+    printBinaryTree(newHead)
+    assert newHead.value == 5, newHead.value
+    assert newHead.right is node5
+    assert newHead.right.value == 8
+    print('----------------------')
 
-	# Additional test
-	node7 = Node(None, None, 7)
-	node6 = Node(None, None, 5)
-	node5 = Node(None, None, 3) 
-	node4 = Node(None, None, 1)
-	node3 = Node(node6, node7, 6)  
-	node2 = Node(node4, node5, 2)
-	node1 = Node(node2, node3, 4)
-	print('Original')
-	printBinaryTree(node1, 0, 5)
-	new_head = remove(node1, 4)
-	print('Altered')
-	printBinaryTree(new_head, 0, 5)
-	assert new_head.value == 3, new_head.value
-	print('----------------------')
+    # Additional tests
+    node7 = Node(None, None, 7)
+    node6 = Node(None, None, 5)
+    node5 = Node(None, None, 3) 
+    node4 = Node(None, None, 1)
+    node3 = Node(node6, node7, 6)  
+    node2 = Node(node4, node5, 2)
+    node1 = Node(node2, node3, 4)
+    print('Original')
+    printBinaryTree(node1)
+    new_head = remove(node1, 4)
+    print('Altered')
+    printBinaryTree(new_head)
+    assert new_head.value == 3, new_head.value
+    print('----------------------')
 
-	node10 = Node(None, None, 99)
-	node9 = Node(None, None, 72)
-	node8 = Node(node9, node10, 91)
-	node7 = Node(None, None, 50)
-	node6 = Node(None, None, 32)
-	node5 = Node(None, node6, 29)
-	node4 = Node(None, None, 11)
-	node3 = Node(node7, node8, 65)
-	node2 = Node(node4, node5, 20)
-	node1 = Node(node2, node3, 41)
-	print('Original')
-	printBinaryTree(node1, 0, 5)
-	new_head = remove(node1, 41)
-	print('Altered')
-	printBinaryTree(new_head, 0, 5)
+    node10 = Node(None, None, 99)
+    node9 = Node(None, None, 72)
+    node8 = Node(node9, node10, 91)
+    node7 = Node(None, None, 50)
+    node6 = Node(None, None, 32)
+    node5 = Node(None, node6, 29)
+    node4 = Node(None, None, 11)
+    node3 = Node(node7, node8, 65)
+    node2 = Node(node4, node5, 20)
+    node1 = Node(node2, node3, 41)
+    print('Original')
+    printBinaryTree(node1)
+    new_head = remove(node1, 41)
+    print('Altered')
+    printBinaryTree(new_head)
+    assert new_head.value == 32, new_head.value
 
 if __name__ == '__main__':
     test()
