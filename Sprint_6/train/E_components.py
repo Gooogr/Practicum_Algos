@@ -1,33 +1,21 @@
 # https://contest.yandex.ru/contest/25069/problems/E/
 
 from typing import List, Dict, Tuple
-from itertools import groupby
 from collections import defaultdict
 
 
-def read_input() -> Tuple[int, List[Tuple[int, int]]]:
+def read_input() -> Dict[int, List]:
+    adj_list = defaultdict(list)
     num_v, num_e = list(map(int, input().split()))
-    edges = []
     for _ in range(num_e):
         u, v = list(map(int, input().split()))
-        edges.append((u, v))
-        edges.append((v, u))
-    return edges, num_v
-
-def create_adj_list(num_v: int, edges: List[Tuple[int, int]]) -> Dict[int,list]:
-    adj_list = {}
-    # {v1: [u1, u2, ...], ...}
-    for vertex, edge_group in groupby(sorted(edges), lambda x: x[0]):
-        adj_list[vertex] = [edge[1] for edge in edge_group]
-    # add vertexes without edges
+        adj_list[u].append(v)
+        adj_list[v].append(u)
     for vertex in range(1, num_v + 1):
         adj_list[vertex] = adj_list.get(vertex, [])
     return adj_list
 
-
-edges, num_v = read_input()
-adj_list = create_adj_list(num_v, edges)
-
+adj_list = read_input()
 
 ###------------------------------- Iterative DFS -------------------------------###
 
@@ -36,9 +24,10 @@ def dfs_iterative(adj_list):
     components[0] = None
     component_count = 1
 
-    while -1 in set(components):
-        start_vertex = components.index(-1)
-        stack = [start_vertex]
+    for vertex in adj_list:
+        if components[vertex] != -1:
+            continue
+        stack = [vertex]
         while stack:
             v = stack.pop() 
             if components[v] == -1:
@@ -84,7 +73,7 @@ result = defaultdict(list)
 for idx, value in enumerate(components[1:]):
     result[value].append(idx + 1)
 
-# sorted_nodes = sorted(result.values())
+# sorted_nodes = sorted(result.values()) #already sorted
 sorted_nodes = result.values()
 
 print(len(sorted_nodes))
