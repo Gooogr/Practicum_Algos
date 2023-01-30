@@ -24,10 +24,6 @@ def create_adj_list(num_v: int, edges: List[Tuple[int, int]]) -> Dict[int,list]:
         adj_list[vertex] = adj_list.get(vertex, [])
     return adj_list
 
-edges, start_vertex, num_v = read_input()
-adj_list = create_adj_list(num_v, edges)
-
-
 def bfs(graph, root):
     visited = set()
     queue =  deque([root]) #because list() as queue is too slow
@@ -36,7 +32,6 @@ def bfs(graph, root):
 
     while queue:
         vertex = queue.popleft()
-        # print(str(vertex) + " ", end="")
         traversal_result.append(vertex)
         for neighbour in graph[vertex]:
             if neighbour not in visited:
@@ -44,5 +39,7 @@ def bfs(graph, root):
                 queue.append(neighbour)
     return traversal_result
 
+edges, start_vertex, num_v = read_input()
+adj_list = create_adj_list(num_v, edges)
 result = bfs(adj_list, start_vertex)
 print(*result)
