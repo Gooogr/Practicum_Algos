@@ -25,24 +25,29 @@ edges, num_v = read_input()
 adj_list = create_adj_list(num_v, edges)
 
 # Colors
-color = ['white'] * (len(adj_list) + 1)
+# 1 - is white
+# 2 - is grey
+# 3 - is black
+# string values itself leads to TE error
+color = [1] * (len(adj_list) + 1)
 color[0] = None
+
 
 # Topological traversal order list
 result_order = []
 
 def TopSort(v, adj_list):
-    color[v] = 'gray'
+    color[v] = 2
     for w in adj_list[v]:
-        if color[w] == 'white':
+        if color[w] == 1:
             TopSort(w, adj_list)
-    color[v] = 'black'
+    color[v] = 3
     result_order.append(v)
 
 def MainTopSort(adj_list):
     for v in adj_list.keys():
-        if color[v] == 'white':
+        if color[v] == 1:
             TopSort(v, adj_list)
 
 MainTopSort(adj_list)
-print(*result_order)
+print(*result_order[::-1])
