@@ -3,7 +3,6 @@ from typing import List, Dict
 from collections import defaultdict
 from collections import deque
 
-
 def read_input() -> Dict[int, List]:
     adj_list = defaultdict(list)
     num_v, num_e = list(map(int, input().split()))
@@ -29,13 +28,6 @@ def bfs(graph, root):
                 visited.add(neighbour)
                 queue.append(neighbour)
     return previous
-
-# path = Stack()
-# current_vertex = v
-# while current_vertex != None: # Предшественник вершины s равен None.
-#     path.push(current_vertex)
-#     current_vertex = previous[current_vertex]
-# return path 
 
 def get_shortest_path(end_v, previous):
     path = []
