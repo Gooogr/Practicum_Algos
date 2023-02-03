@@ -2,7 +2,7 @@
 
 from typing import List
 
-def read_input():
+def read_input() -> List[int]:
     _ = input()
     arr = list(map(int, input().split()))
     return arr
