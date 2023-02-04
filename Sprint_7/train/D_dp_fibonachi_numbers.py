@@ -1,6 +1,13 @@
 # https://contest.yandex.ru/contest/25596/problems/D/
+# Methods comparing
+# Simple recursion: 
+# O(2^n) time, O(n) space. The size of space controls
+# by call stack max size, it can't be more than N in any case.
+# DP: 
+# O(n) time, O(n) space
 
 from typing import Dict
+
 
 # Iterative witch cache
 def get_fibo_number(x: int) -> int:
