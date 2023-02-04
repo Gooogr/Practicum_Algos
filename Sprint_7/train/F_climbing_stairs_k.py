@@ -2,7 +2,8 @@
 
 ladder_size, max_steps = map(int, input().split())
 
-# DP with recursion
+# DP with recursion. Valid, but leads to stack overflow error
+# Need to rewrite as iterative
 def total_ways(ladder_size: int, max_steps: int, cache:dict={}):
     # If ladder_size - curret_step < 0
     if ladder_size < 0:
