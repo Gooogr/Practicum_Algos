@@ -1,5 +1,5 @@
 # https://contest.yandex.ru/contest/25597/problems/A/
-# https://contest.yandex.ru/contest/25597/run-report/81899922/
+# https://contest.yandex.ru/contest/25597/run-report/81926917/
 
 '''
 --Описание решения--
@@ -7,29 +7,28 @@
 https://en.wikipedia.org/wiki/Levenshtein_distance
 
 Суть: 
-* Создаем матрицу размером (m + 1) * (n + 1)
-Дополнительное простанство нужно для базового случая - пустой строки
+* Создаем матрицу размером (m + 1) 
+Дополнительное простанство нужно для базового случая - пустой строки.
+В процессе работы алгоритма будет хранить вторую матрицу такой же длины, кэшируя 
+данные по текущему и прошлому элементу изменяемой.
 * Сдвигам указатели в строках таким образом, чтобы минимизировать 
 суммарное количество изменений.
 
 Движение курсора:
-word1 = 'abc'
-word2 = 'adcf'
-
-* Элементы равны - dp[i + 1][j + 1], 
-число изменений не поменялось, переходим к слелующей паре элементов.
-* Добавление элемента в строку word1 - dp[i + 1][j], 
+* Элементы равны - current_row[j + 1] = previous_row[j] 
+число изменений не поменялось, копируем значение и переходим к слелующей паре элементов.
+* Добавление элемента в строку word1 - previous_row[j], 
 +1 к числу изменений, сдвиг в первой строке из-за вставки
-* Удаление элемента из строки word1 - dp[i][j + 1],
+* Удаление элемента из строки word1 - current_row[j],
 +1 к числу изменений, сдвиг во второй строке к следующему элементу
-* Замена элемента в строке word1 - dp[i + 1][j + 1], +1
+* Замена элемента в строке word1 - previous_row[j + 1],
 +1 к числу изменений, замена произошла на место старого элемента,
 можем переходить к следующей паре элементов
 
 --Доказательство корректности--
 
 Мы начинаем обход с краев матрицы, используя bottom up подход.
-Итоговое значение будет лежать в ячейке dp[0][0]
+Итоговое значение будет лежать в ячейке  current_row[-1]
 
 --Временная сложность--
 Временная сложность алгоритма состовляет O(m*n),
@@ -47,6 +46,8 @@ def read_input() -> Tuple[int, int]:
     word2 = input().strip()
     return word1, word2
 
+
+### --- Original version with O(m*n) memory complexity ---###
 def get_lev_dist(word1: str, word2: str) -> int:
     dp = [[float('inf')] * (len(word2) + 1) for _ in range(len(word1) + 1)]
 
@@ -72,4 +73,28 @@ def get_lev_dist(word1: str, word2: str) -> int:
                 )
     return dp[0][0]
 
+### --- Updated  version with O(min(m, n)) memory complexity ---###
+
+# Also use top down approach to make indicies more readable
+def get_lev_dist(word1: str, word2: str) -> int:
+    m, n = len(word1), len(word2)
+    if m > n:
+        word1, word2, m, n = word2, word1, n, m
+    
+    current_row = [0] * (n + 1)
+    for j in range(n + 1):
+        current_row[j] = j
+    
+    for i in range(m):
+        previous_row, current_row = current_row, [i + 1] + [0] * n
+        for j in range(n):
+            if word1[i] == word2[j]:
+                current_row[j + 1] = previous_row[j]
+            else:
+                current_row[j + 1] = 1 + min(previous_row[j], current_row[j], previous_row[j + 1])
+    
+    return current_row[-1] 
+
+
 print(get_lev_dist(*read_input()))
+
