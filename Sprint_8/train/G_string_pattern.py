@@ -9,14 +9,14 @@ def read_input() -> Tuple[List[int], List[int]]:
     pattern = list(map(int, input().split()))
     return nums, pattern
 
-def _is_pattern(sub_nums: List[int], min_pattern: List[int]):
+def _is_pattern(sub_nums: List[int], min_pattern: List[int])  -> bool:
     assert len(sub_nums) == len(min_pattern)
     # Exlude constant from pattern [1, 3, 5] -> [0 ,2, 4]
     sub_nums_min = min(sub_nums)
     sub_nums = [val - sub_nums_min for val in sub_nums]
     return sub_nums == min_pattern
 
-def get_start_idx(nums: List[int], pattern: List[int]):
+def get_start_idx(nums: List[int], pattern: List[int]) -> List[int]:
     min_pattern_value = min(pattern)
     pattern_min = [val - min_pattern_value for val in pattern]
 
