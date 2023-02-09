@@ -19,9 +19,19 @@ def naive_appoach(s: str):
     return pi
 
 # Time complexity O(n)
-def dp_approach():
-    pass
-
+def dp_approach(s: str):
+    N = len(s)
+    pi = [None] * N
+    pi[0] = 0
+    for i in range(1, N):
+        k = pi[i - 1]
+        while k > 0  and s[k] != s[i]:
+            k = pi[k-1]
+        if s[k] == s[i]:
+            k += 1
+        pi[i] = k
+    return pi
 
 s = input().strip()
-print(*naive_appoach(s))
+# print(*naive_appoach(s))
+print(*dp_approach(s))
